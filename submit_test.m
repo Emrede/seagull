@@ -1,6 +1,6 @@
 function [outputTest] = test()
 load('env');
-%%
+
 datTest = csvread('testing.csv', 1, 0); %Read starting second row and the first column
 indexes = datTest(:,1); %Get the index column
 datTest(:,1) = []; %Then remove it from the data ???

@@ -1,4 +1,4 @@
-%%
+
 load('env');
 
 datTest = csvread('training.csv', 1, 0); %Read starting second row and the first column

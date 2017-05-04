@@ -1,6 +1,6 @@
 clc
 clear
-%%
+
 datTraining1 = csvread('training.csv', 1, 0); %Read starting second row and the first column
 datTraining2 = csvread('additional_training.csv', 1 ,0);
 
