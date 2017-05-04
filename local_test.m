@@ -29,7 +29,7 @@ for i=1:inputCount
         same=same+1;
     end
 end
-
+accuracy=same/inputCount*100;
 
     function m = normalise(dat, ps)
         %Minmax normalises rows.
@@ -39,22 +39,6 @@ end
         m = transpose(m);
     end
 
-    function phiMatrix = calcPhi(dat,C,trainingCount)
-        phiRow=[];
-        phiMatrix=[];
-        centroidDimensions = size(C);
-        cRowCount=centroidDimensions(1);
-        for i=1:trainingCount
-            for j=1:cRowCount
-                %datRow=dat(i,:); %Debug
-                %cRow=C(j,:); %Debug
-                dist = pdist2(dat(i,:),C(j,:),'euclidean'); %distance between X row and indexed centroid
-                %         phi = exp(-1*dist^2/2*sigma); %Gausian exp(-1*0.2^2/2)
-                phiRow(j)=dist;
-            end
-            phiMatrix = [phiMatrix; phiRow];
-        end
-    end
 
     function m = getLastRow(M)
         t = size(M);
