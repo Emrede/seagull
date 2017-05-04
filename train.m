@@ -1,3 +1,4 @@
+function train()
 clc
 clear
 
@@ -34,10 +35,11 @@ trainingCount=trainingDimensions(1); %Number of training instances
 
 phiMatrix = calcPhi(datTraining,C,trainingCount);
 
-[errorTraining,W,outputTraining] = train(W,phiMatrix,trainingCount,predictions,learningRate);
+[errorTraining,W,outputTraining] = training(W,phiMatrix,trainingCount,predictions,learningRate);
 
 save('env');
 
+end
 
 function [m,ps] = normalise(x)
 %Minmax normalises rows.
@@ -66,7 +68,7 @@ for i=1:trainingCount
 end
 end
 
-function [errorArray,W,outputArray] = train(W,phiMatrix,sampleCount,target,learningRate)
+function [errorArray,W,outputArray] = training(W,phiMatrix,sampleCount,target,learningRate)
 %global learningRate
 errorArray=[];
 outputArray=[];
