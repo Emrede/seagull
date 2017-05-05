@@ -1,3 +1,5 @@
+tic
+
 clc
 clear
 
@@ -15,30 +17,35 @@ indexes = datTraining(:,1); %Get the index column
 datTraining(:,1) = []; %Then remove it from the data ???
 predictions = getLastRow(datTraining); %Save the prediction column.
 manMadeCount = nnz(predictions); %Find the positive classifications
+notMmCount = inputCount - manMadeCount; %And the negatives
+
 a = size(datTraining);
 inputCount = a(1); %Store the input count
-notMmCount = inputCount - manMadeCount; %And the negatives
 datTraining(:,a(2))=[]; %Remove the predictions column.
 
-centroidCount = 300;
+centroidCount = 300; % accuracy: 380 = 66, 300 = 62, 400 = 48
 W=ones(1,centroidCount); %Initial weight values set to 1
 learningRate=0.0000003; %0.0000003;
 
 % [datTraining,ps] = normalise(datTraining); %Normalise columns.
 
 [idx, C] = kmeans(datTraining, centroidCount);
+toc
 
 trainingDimensions=size(datTraining);
 trainingCount=trainingDimensions(1); %Number of training instances
 
 phiMatrix = calcPhi(datTraining,C,trainingCount);
+toc
 
-for i=1:50 %50
+for i=1:50 %50 = 62
     [errorTraining,W,outputTraining] = training(W,phiMatrix,trainingCount,predictions,learningRate);
 end
 
 save('env');
+mean(outputTraining)
 
+toc
 
 function [m,ps] = normalise(x)
 %Minmax normalises rows.

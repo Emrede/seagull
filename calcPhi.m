@@ -1,9 +1,9 @@
 function phiMatrix = calcPhi(dat,C,trainingCount)
 sig = 0.001;
-phiRow=[];
-phiMatrix=[];
 centroidDimensions = size(C);
 cRowCount=centroidDimensions(1);
+phiRow=zeros(1,cRowCount);
+phiMatrix=zeros(trainingCount,cRowCount);
 for i=1:trainingCount
     for j=1:cRowCount
         %datRow=dat(i,:); %Debug
@@ -14,6 +14,6 @@ for i=1:trainingCount
         phi = exp(-1*dist^2/2*sig); %Gausian exp(-1*0.2^2/2)
         phiRow(j)=phi;
     end
-    phiMatrix = [phiMatrix; phiRow];
+    phiMatrix(i,:) = phiRow;
 end
 end

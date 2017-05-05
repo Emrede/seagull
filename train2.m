@@ -1,10 +1,10 @@
 clc
 clear
 
-dat = csvread('training.csv', 1, 0); %Read starting second row and the first column
-%datTraining2 = csvread('additional_training.csv', 1 ,0);
+datTraining1 = csvread('training.csv', 1, 0); %Read starting second row and the first column
+datTraining2 = csvread('additional_training.csv', 1 ,0);
 
-%datTraining = vertcat(datTraining1, datTraining2);
+datTraining = vertcat(datTraining1, datTraining2);
 
 % A= [0 2 2; 1 NaN 1; 0 NaN 1]; %Debug
 colMean = nanmean(dat); %Get mean of the NaN valued columns
@@ -33,9 +33,9 @@ inputCount = a(1); %Store the input count
 notMmCount = inputCount - manMadeCount; %And the negatives
 datTraining(:,a(2))=[]; %Remove the predictions column.
 
-centroidCount = 300;
+centroidCount = 304;
 W=ones(1,centroidCount); %Initial weight values set to 1
-learningRate=0.0000003; %0.0000003;
+learningRate=0.0000002; %0.0000003;
 
 % [datTraining,ps] = normalise(datTraining); %Normalise columns.
 
@@ -46,7 +46,7 @@ trainingCount=trainingDimensions(1); %Number of training instances
 
 phiMatrix = calcPhi(datTraining,C,trainingCount);
 
-for i=1:800 %71 min error
+for i=1:1200 %1200
     [errorTraining,W,outputTraining] = training(W,phiMatrix,trainingCount,predictions,learningRate);
 end
 
@@ -62,6 +62,10 @@ for i=1:testCount
 end
 accuracy=same/testCount*100;
 save('env');
+
+mean(outputTraining)
+
+
 
 
 function [m,ps] = normalise(x)

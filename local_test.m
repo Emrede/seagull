@@ -1,4 +1,4 @@
-
+tic
 load('env');
 
 datTest = csvread('training.csv', 1, 0); %Read starting second row and the first column
@@ -30,6 +30,10 @@ for i=1:inputCount
     end
 end
 accuracy=same/inputCount*100;
+
+toc
+
+
 
     function m = normalise(dat, ps)
         %Minmax normalises rows.
