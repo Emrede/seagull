@@ -12,17 +12,19 @@ datTraining = vertcat(datTraining1, datTraining2);
 indexes = datTraining(:,1); %Get the index column
 datTraining(:,1) = []; %Then remove index column from the matrix
 
-sizeTrn = size(datTraining);
-predictions = datTraining(:,sizeTrn(2)); %Save the prediction column.
+sizeTrn = size(datTraining); %Get the size of the first version of the data
+predictions = datTraining(:,sizeTrn(2)); %Save the prediction column
+datTraining(:,sizeTrn(2))=[]; %Remove the prediction column
 
-%Bilmem ne i$lemi
-colMean = nanmean(datTraining); %Get mean of the NaN valued columns
-[row,col] = find(isnan(datTraining)); %Get the indexes of NaN valued cells 
-datTraining(isnan(datTraining)) = colMean(col); %Change the NaN value with the mean of its column 
+% %Bilmem ne i$lemi
+% colMean = nanmean(datTraining); %Get mean of the NaN valued columns
+% [row,col] = find(isnan(datTraining)); %Get the indexes of NaN valued cells 
+% datTraining(isnan(datTraining)) = colMean(col); %Change the NaN value with the mean of its column 
 
-[coeff1,score1,latent,tsquared,explained,mu1] = pca(datTraining,'algorithm','eig');
+[coeff1,score1,latent,tsquared,explained,mu1] = pca(datTraining,'algorithm','als');
 datTraining = score1*coeff1' + repmat(mu1,sizeTrn(1),1);
-datTraining(:,sizeTrn(2)) = predictions;
+datTraining(:,sizeTrn(2)) = predictions; %Add the prediction column after pca process
+
 toc
 
 %Convert double matrix into table
@@ -35,6 +37,7 @@ md1 = fitcsvm (trnTable, 'VarName4609','Standardize',true,'KernelFunction','RBF'
 
 [label,score] = predict(md1,trnTable);
 
+%Checking of the matching results
 bingo = 0;
 for i=1:sizeTrn(1)
     if predictions(i)==label(i)
